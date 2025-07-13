@@ -1,9 +1,17 @@
-# Overview:
-This Terraform configuration simulates an AWS infrastructure required to:
+# Terraform Dummy AWS Infrastructure
 
-Trigger a Lambda function via an API Gateway.
+## Overview
+Terraform configuration simulating AWS infrastructure (VPC, Lambda, S3, API Gateway) using LocalStack.
 
-Save received data to an S3 bucket.
+## Requirements
+- Terraform
+- LocalStack (Docker)
+
+## Setup Instructions
+1. Start LocalStack:
+```shell
+docker run -d -p 4566:4566 localstack/localstack
+
 
 ├── main.tf                       # Terraform infrastructure configuration (your provided code)
 ├── lambda_function_payload.zip   # Zipped Lambda function code (to be created)
@@ -14,6 +22,20 @@ Save received data to an S3 bucket.
 ├── outputs.tf                    # Terraform outputs (can separate from main.tf if desired)
 ├── variables.tf                  # Optional variables (e.g., region, bucket names)
 └── README.md       
+
+Deploy Terraform:
+terraform init
+terraform apply
+
+
+Invoke the Lambda via API Gateway endpoint.
+
+
+Notes
+Dummy credentials used for local testing only.
+
+Modify IAM and endpoints for actual deployments.
+
 
 Deploy Lambda within a private VPC.
 
@@ -44,3 +66,10 @@ API Gateway only allows Lambda invocation securely.
 
 Limitations:
 This is a simulated setup using LocalStack endpoints; real AWS resources are not provisioned.
+
+
+
+
+Zip this file as lambda_function_payload.zip:
+cd lambda
+zip ../lambda_function_payload.zip index.py
