@@ -1,0 +1,196 @@
+ /mnt/c/Users/Gelson/Downloads/save_sent_picture_to_S3  docker run -d -p 4566:4566 -p 4571:4571 localstack/localstack
+Unable to find image 'localstack/localstack:latest' locally
+latest: Pulling from localstack/localstack
+d0b609e4bacb: Pulling fs layer                                                                                       
+483d0dd37518: Pulling fs layer                                                                                       
+02a5d22e0d6f: Pulling fs layer                                                                                       
+471797cdda8c: Pulling fs layer                                                                                       
+264a1f9cb317: Pulling fs layer                                                                                       
+264a1f9cb317: Waiting                                                                                                
+502028993969: Waiting                                                                                                
+810649ead676: Pulling fs layer                                                                                       
+4f4fb700ef54: Pull complete
+e5d07f542ec3: Pull complete
+30df4eb2d51c: Pull complete
+20a068269510: Pull complete
+a4ac6325b63c: Pull complete
+29125621bf32: Pull complete
+37948cc888ba: Pull complete
+58f2f5a6b47a: Pull complete
+3f3633d65b82: Pull complete
+e7274bc04b02: Pull complete
+3c465e03a5fc: Pull complete
+6b01cdff5e55: Pull complete
+59eabaeb952b: Pull complete
+ecfb005a4164: Pull complete
+1153355390ee: Pull complete
+ce98c06d3e65: Pull complete
+Digest: sha256:996c61b13801f9a0f539550ce5364b821c95e1bfb691b37a329d0ef4f2dcc362
+Status: Downloaded newer image for localstack/localstack:latest
+15a3c07b25578898366059909bee4de8f00529f174ac9575a34519965470915f
+ /mnt/c/Users/Gelson/Downloads/save_sent_picture_to_S3                                          ✔  Ubu  19:22:56 
+ /mnt/c/Users/Gelson/Downloads/save_sent_picture_to_S3  curl http://localhost:4566/_localstack/health
+
+{"services": {"acm": "available", "apigateway": "available", "cloudformation": "available", "cloudwatch": "available", "config": "available", "dynamodb": "available", "dynamodbstreams": "available", "ec2": "available", "es": "available", "events": "available", "firehose": "available", "iam": "available", "kinesis": "available", "kms": "available", "lambda": "available", "logs": "available", "opensearch": "available", "redshift": "available", "resource-groups": "available", "resourcegroupstaggingapi": "available", "route53": "available", "route53resolver": "available", "s3": "running", "s3control": "available", "scheduler": "available", "secretsmanager": "available", "ses": "available", "sns": "available", "sqs": "available", "ssm": "available", "stepfunctions": "available", "sts": "available", "support": "available", "swf": "available", "transcribe": "available"}, "edition": "community", "version": "4.6.1.dev19"}#         
+ /mnt/c/Users/Gelson/Downloads/save_sent_picture_to_S3     
+ 
+ based on the services i can tell  LocalStack is running properly.
+
+ now i am going to 
+
+ terraform init
+
+ /mnt/c/Users/Gelson/Downloads/save_sent_picture_to_S3   main ● ?  terraform validate       1 ↵  Ubu  20:18:20 
+
+╷
+│ Warning: Argument is deprecated
+│ 
+│   with aws_api_gateway_deployment.dummy_deployment,
+│   on outputs.tf line 6, in resource "aws_api_gateway_deployment" "dummy_deployment":
+│    6:   stage_name  = "dev"
+│ 
+│ stage_name is deprecated. Use the aws_api_gateway_stage resource instead.
+╵
+╷
+│ Warning: Deprecated attribute
+│ 
+│   on outputs.tf line 10, in output "api_gateway_invoke_url":
+│   10:   value = "${aws_api_gateway_deployment.dummy_deployment.invoke_url}/upload"
+│
+│ The attribute "invoke_url" is deprecated. Refer to the provider documentation for details.
+╵
+Success! The configuration is valid, but there were some validation warnings as shown above.
+
+
+ terraform apply -auto-approve      
+
+aws_api_gateway_rest_api.dummy_api: Refreshing state... [id=5iisi7tpzg]
+aws_vpc.dummy_vpc: Refreshing state... [id=vpc-6f66b5dcc74079ff2]
+aws_iam_role.dummy_lambda_role: Refreshing state... [id=dummy_lambda_role]
+aws_api_gateway_resource.dummy_resource: Refreshing state... [id=5wzahpzbqu]
+aws_api_gateway_method.dummy_method: Refreshing state... [id=agm-5iisi7tpzg-5wzahpzbqu-POST]
+aws_iam_policy_attachment.lambda_s3_policy_attachment: Refreshing state... [id=lambda_s3_policy_attachment]
+aws_security_group.lambda_sg: Refreshing state... [id=sg-368e447cb221e6f93]
+aws_subnet.private_subnet: Refreshing state... [id=subnet-8795bd2b20cec05ba]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with 
+the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # aws_api_gateway_deployment.dummy_deployment will be created
+  + resource "aws_api_gateway_deployment" "dummy_deployment" {
+      + created_date  = (known after apply)
+      + execution_arn = (known after apply)
+      + id            = (known after apply)
+      + invoke_url    = (known after apply)
+      + rest_api_id   = "5iisi7tpzg"
+    }
+
+  # aws_api_gateway_integration.dummy_integration will be created
+  + resource "aws_api_gateway_integration" "dummy_integration" {
+      + cache_namespace         = (known after apply)
+      + connection_type         = "INTERNET"
+      + http_method             = "POST"
+      + id                      = (known after apply)
+      + integration_http_method = "POST"
+      + passthrough_behavior    = (known after apply)
+      + resource_id             = "5wzahpzbqu"
+      + rest_api_id             = "5iisi7tpzg"
+      + timeout_milliseconds    = 29000
+      + type                    = "AWS_PROXY"
+      + uri                     = (known after apply)
+    }
+
+  # aws_lambda_function.dummy_lambda will be created
+  + resource "aws_lambda_function" "dummy_lambda" {
+      + architectures                  = (known after apply)
+      + arn                            = (known after apply)
+      + code_sha256                    = (known after apply)
+      + filename                       = "lambda_function_payload.zip"
+      + function_name                  = "dummy_lambda"
+      + handler                        = "index.handler"
+      + id                             = (known after apply)
+      + invoke_arn                     = (known after apply)
+      + last_modified                  = (known after apply)
+      + memory_size                    = 128
+      + package_type                   = "Zip"
+      + publish                        = false
+      + qualified_arn                  = (known after apply)
+      + qualified_invoke_arn           = (known after apply)
+      + reserved_concurrent_executions = -1
+      + role                           = "arn:aws:iam::000000000000:role/dummy_lambda_role"
+      + runtime                        = "python3.9"
+      + signing_job_arn                = (known after apply)
+      + signing_profile_version_arn    = (known after apply)
+      + skip_destroy                   = false
+      + source_code_hash               = (known after apply)
+      + source_code_size               = (known after apply)
+      + tags_all                       = (known after apply)
+      + timeout                        = 3
+      + version                        = (known after apply)
+
+      + environment {
+          + variables = {
+              + "BUCKET_NAME" = "dummy-s3-bucket"
+            }
+        }
+
+      + vpc_config {
+          + ipv6_allowed_for_dual_stack = false
+          + security_group_ids          = [
+              + "sg-368e447cb221e6f93",
+            ]
+          + subnet_ids                  = [
+              + "subnet-8795bd2b20cec05ba",
+            ]
+          + vpc_id                      = (known after apply)
+        }
+    }
+
+  # aws_lambda_permission.dummy_permission will be created
+  + resource "aws_lambda_permission" "dummy_permission" {
+      + action              = "lambda:InvokeFunction"
+      + function_name       = "dummy_lambda"
+      + id                  = (known after apply)
+      + principal           = "apigateway.amazonaws.com"
+      + source_arn          = "arn:aws:execute-api:us-east-1::5iisi7tpzg/*/*/*"
+      + statement_id        = "AllowAPIGatewayInvoke"
+      + statement_id_prefix = (known after apply)
+    }
+
+  # aws_s3_bucket.dummy_bucket will be created
+  + resource "aws_s3_bucket" "dummy_bucket" {
+      + acceleration_status         = (known after apply)
+      + acl                         = (known after apply)
+      + arn                         = (known after apply)
+      + bucket                      = "dummy-s3-bucket"
+      + bucket_domain_name          = (known after apply)
+      + bucket_prefix               = (known after apply)
+      + bucket_regional_domain_name = (known after apply)
+      + force_destroy               = false
+      + hosted_zone_id              = (known after apply)
+      + id                          = (known after apply)
+      + object_lock_enabled         = (known after apply)
+      + policy                      = (known after apply)
+      + region                      = (known after apply)
+      + request_payer               = (known after apply)
+      + tags_all                    = (known after apply)
+      + website_domain              = (known after apply)
+      + website_endpoint            = (known after apply)
+    }
+
+Plan: 5 to add, 0 to change, 0 to destroy.
+aws_s3_bucket.dummy_bucket: Creating...
+╷
+│ Error: creating S3 Bucket (dummy-s3-bucket): operation error S3: CreateBucket, https response error StatusCode: 0, RequestID: , HostID: , request send failed, Put "http://dummy-s3-bucket.localhost:4566/": dial tcp: lookup dummy-s3-bucket.localhost on 8.8.8.8:53: no such host
+│
+│   with aws_s3_bucket.dummy_bucket,
+│   on main.tf line 66, in resource "aws_s3_bucket" "dummy_bucket":
+│   66: resource "aws_s3_bucket" "dummy_bucket" {
+│
+
+
+  Reminder: And also add a local workaround by setting environment variable (this is important for Terraform to talk to LocalStack S3 properly):
+│

@@ -25,33 +25,52 @@ provider "aws" {
     s3         = "http://localhost:4566"
     apigateway = "http://localhost:4566"
     ec2        = "http://localhost:4566"
+    iam        = "http://localhost:4566" 
   }
 }
-
+# Dummy VPC
 resource "aws_vpc" "dummy_vpc" {
   cidr_block = "10.0.0.0/16"
   tags = { Name = "DummyVPC" }
 }
 
+# Dummy Subnet
 resource "aws_subnet" "private_subnet" {
   vpc_id     = aws_vpc.dummy_vpc.id
   cidr_block = "10.0.1.0/24"
   tags = { Name = "PrivateSubnet" }
 }
-
+# Dummy Security Group
 resource "aws_security_group" "lambda_sg" {
   name        = "lambda_sg"
   description = "Allow Lambda access"
   vpc_id      = aws_vpc.dummy_vpc.id
 
-  ingress { protocol = "-1"; from_port = 0; to_port = 0; cidr_blocks = ["10.0.0.0/16"] }
-  egress  { protocol = "-1"; from_port = 0; to_port = 0; cidr_blocks = ["0.0.0.0/0"] }
+  ingress {
+    protocol    = "-1"
+    from_port   = 0
+    to_port     = 0
+    cidr_blocks = ["10.0.0.0/16"]
+  }
+
+  egress {
+    protocol    = "-1"
+    from_port   = 0
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
+
+# Dummy S3 Bucket
 resource "aws_s3_bucket" "dummy_bucket" {
   bucket = "dummy-s3-bucket"
+  lifecycle {
+    ignore_changes = [bucket_prefix]
+  }
 }
 
+# Dummy Lambda Function
 resource "aws_lambda_function" "dummy_lambda" {
   function_name = "dummy_lambda"
   handler       = "index.handler"
@@ -71,6 +90,7 @@ resource "aws_lambda_function" "dummy_lambda" {
   }
 }
 
+# Dummy API Gateway
 resource "aws_api_gateway_rest_api" "dummy_api" {
   name        = "dummy_api_gateway"
   description = "Dummy API Gateway"
