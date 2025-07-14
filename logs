@@ -537,3 +537,43 @@ To https://github.com/gelson12/save_sent_picture_to_S3.git
 
   Reminder: if you willing to test my work and since i am not using real AWS resources add a local workaround by setting environment variable (this is important for Terraform to talk to LocalStack S3 properly):
 │
+
+
+Security RISK REMINDER:I am well aware that it is a security risk to commit terraform.tfstate and terraform.tfstate.backup to the Git repository, especially a public one.
+Because:
+Terraform state files can contain sensitive data, such as:
+
+IAM role ARNs and secrets
+
+Plaintext variables like:
+
+AWS access keys (if hardcoded, which is discouraged)
+
+Environment variables (e.g., DB passwords, S3 bucket names)
+
+Resource metadata that might help an attacker understand your architecture
+
+Even if no secrets are in there right now, future changes can unintentionally expose sensitive values — and the Git history will retain that.
+
+
+However because I am using LocalStack to simulate AWS resources logically the security risks would not apply
+
+However these are the steps i would have taken to mitigate this risks
+
+Best Practice
+
+Add to .gitignore:
+Add the following to your .gitignore:
+
+terraform.tfstate
+terraform.tfstate.backup
+*.tfstate*
+Remove from Git history (if already committed):
+
+If already pushed them:
+
+git rm --cached terraform.tfstate terraform.tfstate.backup
+echo '*.tfstate*' >> .gitignore
+git add .gitignore
+git commit -m "Remove state files from repo and add to .gitignore"
+git push
