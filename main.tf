@@ -20,6 +20,7 @@ provider "aws" {
   secret_key                  = "dummy"
   skip_credentials_validation = true
   skip_requesting_account_id  = true
+  s3_use_path_style           = true   # <-- critical fix
   endpoints {
     lambda     = "http://localhost:4566"
     s3         = "http://localhost:4566"
@@ -76,7 +77,7 @@ resource "aws_lambda_function" "dummy_lambda" {
   handler       = "index.handler"
   runtime       = "python3.9"
   role          = aws_iam_role.dummy_lambda_role.arn
-  filename      = "lambda_function_payload.zip"
+  filename      = "${path.module}/lambda/lambda_function_payload.zip"
 
   vpc_config {
     subnet_ids         = [aws_subnet.private_subnet.id]

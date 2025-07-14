@@ -70,9 +70,10 @@ This is a simulated setup using LocalStack endpoints; real AWS resources are not
 
 
 
-Zip this file as lambda_function_payload.zip:
-cd lambda
-zip ../lambda_function_payload.zip index.py
+Ziping this file as lambda_function_payload.zip:
+/mnt/c/Users/Gelson/Downloads/save_sent_picture_to_S3   main ●  cd lambda                12 ↵  Ubu  09:16:14 
+/mnt/c/Users/Gelson/Downloads/save_sent_picture_to_S3/lambda   main ●  zip lambda_function_payload.zip index.py 
+  adding: index.py (deflated 33%)
 
 
 Setting up terraform on my local machine
@@ -102,3 +103,4 @@ rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.
 
 
+NOTE: once again please note that ill be using LocalStack, and LocalStack needs Docker to deploy Lambda functions, because it uses containers to simulate AWS Lambda.
