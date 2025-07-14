@@ -515,7 +515,24 @@ Outputs:
 api_gateway_invoke_url = "http://7vcz2cp7r8.execute-api.localhost.localstack.cloud:4566/dev/upload"
 dummy_api_endpoint = "arn:aws:execute-api:us-east-1::7vcz2cp7r8"
  /mnt/c/Users/Gelson/Downloads/save_sent_picture_to_S3   main ● ?     
-│
+
+
+/mnt/c/Users/Gelson/Downloads/save_sent_picture_to_S3   main ●  git add .                   ✔  Ubu  10:24:30 
+ /mnt/c/Users/Gelson/Downloads/save_sent_picture_to_S3   main ✚  git commit -m "made couple of adjustments fixes to the LocalStack"
+[main 613e3fe] made couple of adjustments fixes to the LocalStack
+ 1 file changed, 11 insertions(+)
+ /mnt/c/Users/Gelson/Downloads/save_sent_picture_to_S3   main ↑1  git push origin main --force
+
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 320 bytes | 15.00 KiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/gelson12/save_sent_picture_to_S3.git
+   c9175dc..613e3fe  main -> main
+ /mnt/c/Users/Gelson/Downloads/save_sent_picture_to_S3   main   │
 
 
   Reminder: if you willing to test my work and since i am not using real AWS resources add a local workaround by setting environment variable (this is important for Terraform to talk to LocalStack S3 properly):
