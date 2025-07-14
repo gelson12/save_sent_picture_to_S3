@@ -72,6 +72,17 @@ Success! The configuration is valid, but there were some validation warnings as 
  /mnt/c/Users/Gelson/Downloads/save_sent_picture_to_S3   main ● ?  docker ps                 ✔  Ubu  10:05:52 
 CONTAINER ID   IMAGE                   STATUS                    NAMES
 7523fb456263   localstack/localstack   Up 32 seconds (healthy)   trusting_perlman
+
+/mnt/c/Users/Gelson/Downloads/save_sent_picture_to_S3   main ● ?  docker run -d \           ✔  Ubu  10:05:47 
+  -p 4566:4566 -p 4571:4571 \
+  -e SERVICES=lambda,s3,iam,apigateway,ec2 \
+  -e DOCKER_HOST=unix:///var/run/docker.sock \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  localstack/localstack
+7523fb45626354a0c967aa11d7a1ff75d1c81fdf91cecef5a050b64101b0ca1b
+ /mnt/c/Users/Gelson/Downloads/save_sent_picture_to_S3   main ● ?  docker ps                 ✔  Ubu  10:05:52 
+CONTAINER ID   IMAGE                   STATUS                    NAMES
+7523fb456263   localstack/localstack   Up 32 seconds (healthy)   trusting_perlman
  /mnt/c/Users/Gelson/Downloads/save_sent_picture_to_S3   main ● ?  docker exec -it 7523fb456263 docker ps
 OCI runtime exec failed: exec failed: unable to start container process: exec: "docker": executable file not found in $PATH: unknown
  /mnt/c/Users/Gelson/Downloads/save_sent_picture_to_S3   main ● ?  terraform apply -auto-approve
