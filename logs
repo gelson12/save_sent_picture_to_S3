@@ -192,5 +192,5 @@ aws_s3_bucket.dummy_bucket: Creating...
 │
 
 
-  Reminder: And also add a local workaround by setting environment variable (this is important for Terraform to talk to LocalStack S3 properly):
+  Reminder: if you willing to test my work and since i am not using real AWS resources add a local workaround by setting environment variable (this is important for Terraform to talk to LocalStack S3 properly):
 │

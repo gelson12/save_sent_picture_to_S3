@@ -9,7 +9,7 @@ Terraform configuration simulating AWS infrastructure (VPC, Lambda, S3, API Gate
 
 ## Setup Instructions
 1. Start LocalStack:
-```shell
+
 docker run -d -p 4566:4566 localstack/localstack
 
 
@@ -65,7 +65,7 @@ Lambda is deployed within a private subnet.
 API Gateway only allows Lambda invocation securely.
 
 Limitations:
-This is a simulated setup using LocalStack endpoints; real AWS resources are not provisioned.
+This is a simulated setup using LocalStack endpoints; real AWS resources are not provisioned due to the fact that my current employers(BA) does not permit me to use their infrastructure for testing.
 
 
 
@@ -73,3 +73,32 @@ This is a simulated setup using LocalStack endpoints; real AWS resources are not
 Zip this file as lambda_function_payload.zip:
 cd lambda
 zip ../lambda_function_payload.zip index.py
+
+
+Setting up terraform on my local machine
+terraform init        1 ↵  Ubu  19:50:19 
+
+
+Initializing the backend...
+
+Initializing provider plugins...
+- Finding hashicorp/aws versions matching "~> 5.0"...
+- Installing hashicorp/aws v5.100.0...
+- Installed hashicorp/aws v5.100.0 (signed by HashiCorp)
+
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+
+
